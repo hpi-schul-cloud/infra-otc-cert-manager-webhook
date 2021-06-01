@@ -1,0 +1,37 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+
+    # Email address used for ACME registration
+    email: mail@example.com # REPLACE THIS WITH YOUR EMAIL!!!
+
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-staging
+
+    solvers:
+      - dns01:
+          webhook:
+            # See main.go > GroupName. github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook
+            groupName: infra-otc-cert-manager-webhook.hpi-schul-cloud.github.com
+            # See solver.go > Name.
+            solverName: otcdns
+            # The following config is given to the webhook in the Present and CleanUp methods as "c.Config" in json format.
+            # It will be parsed into the OtcDncConfig data structure.
+            # The conformanceTest will load this information from the config.json in the configured ManifestPath.
+            config:
+              # Only for local testing, if no secrets are available.
+              # accessKey: ACCESSKEY
+              # secretKey: SECRETKEY
+
+              accessKeySecretRef:
+                name: otcdns-credentials
+                key: accessKey
+              secretKeySecretRef:
+                name: otcdns-credentials
+                key: secretKey

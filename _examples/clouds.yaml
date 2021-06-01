@@ -1,0 +1,27 @@
+# Copy this file to ~/.config/openstack/clouds.yaml and add your OTC authentication information
+# The tests will load the information from there
+# There are two profiles. One for key based authentication and one for user-password based authentication
+clouds:
+  # clouds: >> https://github.com/opentelekomcloud/gophertelekomcloud/blob/v0.3.2/openstack/loader.go >> Cloud
+  otcaksk:
+    profile: otcaksk
+    interface: 'public'
+    identity_api_version: 3 # !Important
+    # token, password, aksk
+    auth_type: aksk
+    auth:
+      # auth: >> https://github.com/opentelekomcloud/gophertelekomcloud/blob/v0.3.2/openstack/loader.go >> AuthInfo
+      auth_url: 'https://iam.eu-de.otc.t-systems.com:443/v3'
+      ak: '<OTCDNS ACCESSKEY>'
+      sk: '<OTCDNS SECRETKEY>'
+  otcuser:
+    profile: otcuser
+    interface: 'public'
+    identity_api_version: 3 # !Important
+    auth:
+      # auth: >> https://github.com/opentelekomcloud/gophertelekomcloud/blob/v0.3.2/openstack/loader.go >> AuthInfo
+      auth_url: 'https://iam.eu-de.otc.t-systems.com:443/v3'
+      username: '<USERNAME>'
+      password: '<PASSWORD>'
+      project_id: '<PROJECT_ID>'
+      domain_name: '<DOMAIN_NAME>'

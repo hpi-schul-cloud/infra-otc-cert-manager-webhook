@@ -1,0 +1,14 @@
+{
+  "authURL": "https://iam.eu-de.otc.t-systems.com:443/v3",
+  "region": "eu-de",
+  "accessKey": "<LOCAL TEST OTCDNS ACCESSKEY>",
+  "secretKey": "<LOCAL TEST OTCDNS SECRETKEY>",
+  "accessKeySecretRef": {
+      "name": "otcdns-credentials",
+      "key": "accessKey"
+  },
+  "secretKeySecretRef": {
+      "name": "otcdns-credentials",
+      "key": "secretKey"
+  }
+}
