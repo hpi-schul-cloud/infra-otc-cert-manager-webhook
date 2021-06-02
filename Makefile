@@ -5,8 +5,8 @@ ARCH ?= $(shell go env GOARCH)
 IMAGE_NAME := "webhook"
 IMAGE_TAG := "latest"
 # Helm
-RELEASE_NAME := "testrelease"
-NAMESPACE := "testnamespace"
+RELEASE_NAME := "test-release"
+NAMESPACE := "test-namespace"
 
 OUT := $(shell pwd)/_out
 
