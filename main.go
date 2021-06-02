@@ -5,6 +5,7 @@ import (
 
 	"github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/otcdns"
 	"github.com/jetstack/cert-manager/pkg/acme/webhook/cmd"
+	"k8s.io/klog"
 )
 
 var GroupName = getGroupName()
@@ -20,7 +21,9 @@ func main() {
 	// You can register multiple DNS provider implementations with a single
 	// webhook, where the Name() method will be used to disambiguate between
 	// the different implementations.
+	klog.V(6).Infof("GroupName is %s. Running webhook server", GroupName)
 	cmd.RunWebhookServer(GroupName, otcdns.NewSolver())
+	klog.V(6).Infof("Webhook server started")
 }
 
 func getGroupName() string {
