@@ -45,6 +45,8 @@ build:
 #
 # Use helm to render the manifests for the webhook.
 #
+# This excludes Secrets. A template for the Secrets can be found in _examples/secret-otcdns-credentials.yaml
+#
 .PHONY: rendered-manifest.yaml
 rendered-manifest.yaml:
 	helm template \

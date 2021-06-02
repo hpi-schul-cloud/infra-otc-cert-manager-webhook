@@ -21,6 +21,9 @@ ___*/
 _out
 _test
 
-# This is the file used for local testing. May contain credential data. Do not checkin.
+# The files in testdata usually should not be checked in. They may contain
+# sensitive data like passwords for testing.
+# Do put examples or templates in the _examples directory.
 # Example see: _examples/example_config.json
-testdata/otcdns/manifests/config.json
+testdata/otcdns/**/*.json
+testdata/otcdns/**/*.yaml
