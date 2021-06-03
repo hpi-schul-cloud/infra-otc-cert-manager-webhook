@@ -88,3 +88,31 @@ subjects:
     kind: ServiceAccount
     name: {{ .Values.certManager.serviceAccountName }}
     namespace: {{ .Values.certManager.namespace }}
+---
+# Grant access to read secrets
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "infra-otc-cert-manager-webhook.fullname" . }}:secret-reader
+  namespace: {{ .Release.Namespace | quote }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: [{{ .Values.credentialsSecretRef | quote }}]
+    verbs: ["get", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "infra-otc-cert-manager-webhook.fullname" . }}:secret-reader
+  namespace: {{ .Release.Namespace | quote }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "infra-otc-cert-manager-webhook.fullname" . }}:secret-reader
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: {{ include "infra-otc-cert-manager-webhook.fullname" . }}
+    namespace: {{ .Release.Namespace | quote }}
