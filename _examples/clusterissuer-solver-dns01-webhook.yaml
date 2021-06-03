@@ -1,18 +1,18 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-staging-otcdns
+  name: letsencrypt-otcdns
 spec:
   acme:
     # The ACME server URL
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
 
     # Email address used for ACME registration
     email: mail@example.com # REPLACE THIS WITH YOUR EMAIL!!!
 
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-staging-otcdms
+      name: letsencrypt-otcdns
 
     solvers:
       - dns01:
