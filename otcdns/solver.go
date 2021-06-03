@@ -196,7 +196,8 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 		Region: solverWebhookConfig.Region,
 	}
 
-	klog.V(6).Infof("authOpts.IdentityEndpoint=%s, authOpts.AccessKey=%s, endpointOpts.Region=%s, endpointOpts=%s", authOpts.IdentityEndpoint, authOpts.AccessKey, endpointOpts.Region, endpointOpts)
+	klog.Infof("========================================================================================")
+	klog.Infof("authOpts.IdentityEndpoint=%s, authOpts.AccessKey=%s, endpointOpts.Region=%s, endpointOpts=%s", authOpts.IdentityEndpoint, authOpts.AccessKey, endpointOpts.Region, endpointOpts)
 
 	// Create the client
 	otcDnsClient, err := NewDNSV2ClientWithAuth(authOpts, endpointOpts)

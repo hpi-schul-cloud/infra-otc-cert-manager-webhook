@@ -16,6 +16,10 @@ $(shell mkdir -p "$(OUT)")
 
 #
 # Defaulttarget. Runs the test.
+# 
+# "go help testflag" says that "-args" can be used to forward parameters, e.g. to increase verbosity, but it doesn't seem to work for klog.
+# go test -v -args -v 6 .
+# go test -v .
 #
 test: _test/kubebuilder
 	go test -v .

@@ -7,6 +7,7 @@ import (
 	"github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/otcdns"
 	"github.com/jetstack/cert-manager/pkg/acme/webhook"
 	"github.com/jetstack/cert-manager/test/acme/dns"
+	"k8s.io/klog"
 )
 
 //
@@ -25,6 +26,9 @@ func TestRunsSuite(t *testing.T) {
 	// The manifest path should contain a file named config.json that is a
 	// snippet of valid configuration that should be included on the
 	// ChallengeRequest passed as part of the test cases.
+
+	klog.Info("Running test")
+	klog.V(2).Infof("Verbosity 2 message")
 
 	var otcdnsSolver webhook.Solver = otcdns.NewSolver()
 
