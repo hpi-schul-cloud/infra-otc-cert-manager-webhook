@@ -8,13 +8,15 @@
 # here is recommended.
 groupName: infra-otc-cert-manager-webhook.hpi-schul-cloud.github.com
 
+credentialsSecretRef: otcdns-credentials
+
 certManager:
   namespace: cert-manager
   serviceAccountName: cert-manager
 
 image:
   repository: schulcloud/infra-otc-cert-manager-webhook
-  tag: latest
+  tag: sha-4c1aed0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
