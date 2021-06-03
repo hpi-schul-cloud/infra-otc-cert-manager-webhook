@@ -173,7 +173,7 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 	// For a real Kubernetes environment an example for the manifest yaml file can be found in _examples/secret_otcdns_credential.yaml
 	solverWebhookConfig, err := configJsonToOtcDnsConfig(challengeRequest.Config)
 	if err != nil {
-		return nil, fmt.Errorf("cannot create otcDnsClient. %s", err)
+		return nil, fmt.Errorf("cannot create otcDnsClient. Json not converted. %s", err)
 	}
 	// fmt.Printf("Decoded configuration %v", solverWebhookConfig)
 	// klog.V(6).Infof("decoded configuration %v", solverWebhookConfig)
@@ -181,7 +181,7 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 	// Get the secrets from Kubernetes
 	secrets, err := s.getOtcDnsSecrets(&solverWebhookConfig, challengeRequest.ResourceNamespace)
 	if err != nil {
-		return nil, fmt.Errorf("cannot create otcDnsClient. %s", err)
+		return nil, fmt.Errorf("cannot create otcDnsClient. Secrets not read. %s", err)
 	}
 
 	// Create the input parameters for the OtcDnsClient
@@ -203,7 +203,7 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 	// This is an alternative way to create a client
 	// otcdnsClient, err := NewDNSV2Client()
 	if err != nil {
-		return nil, fmt.Errorf("cannot create otcDnsClient. %s", err)
+		return nil, fmt.Errorf("cannot create otcDnsClient. Failed to instantiate. %s", err)
 	}
 
 	subdomain, _ := s.extractDomainAndSubdomainFromChallengeRequest(challengeRequest)

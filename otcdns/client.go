@@ -41,12 +41,12 @@ func NewDNSV2ClientWithAuth(authOpts otc.AuthOptionsProvider, endpointOpts otc.E
 
 	providerClient, err := getProviderClientWithAccessKeyAuth(authOpts)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot create providerClient. %s", err)
 	}
 
 	serviceClient, err := otcos.NewDNSV2(providerClient, endpointOpts)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot create serviceClient. %s", err)
 	}
 
 	return &OtcDnsClient{Sc: serviceClient}, nil
