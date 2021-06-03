@@ -269,7 +269,7 @@ func (s *OtcDnsSolver) getOtcDnsSecrets(config *OtcDnsConfig, namespace string) 
 func (s *OtcDnsSolver) getReferencedSecret(namespace string, keyRefName string, keyRefKey string) (string, error) {
 	secret, err := s.client.CoreV1().Secrets(namespace).Get(context.Background(), keyRefName, metav1.GetOptions{})
 	if err != nil {
-		return "", fmt.Errorf("failed to load secret %q", namespace+"/"+keyRefName)
+		return "", fmt.Errorf("failed to load secret %q. %s", namespace+"/"+keyRefName, err)
 	}
 	if accessKey, ok := secret.Data[keyRefKey]; ok {
 		return string(accessKey), nil
