@@ -4,9 +4,6 @@
 // - Reading dns records
 // - Creating and deleting a TXT record.
 //
-// TODO: The tests are currently based on "no error = test pass", but in some cases test assertions would make more sense.
-//       E.g. check that the result in TestHasTxtRecordSet is true, not only that the method throws no error.
-//
 // VSCode users: Add { ... "go.testFlags": ["-v"] ... } to your settings.json to view log output for non failing tests.
 //
 // Be aware that some DNS operations may have a delay.
@@ -29,7 +26,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TODO: Move to test config file
 const (
 	testSubdomain = "cert-manager-dns01-tests"
 	sleepTime     = 2 * time.Second

@@ -2,8 +2,6 @@
 // This part of the otcdns package offers a client that provides the ability to create and cleanup the needed TXT records in the OTC DNS.
 // The methods are implemented in a way that they are most useful to build a solver. This is not a generic library.
 //
-// TODO: Support subdomain. Currently only "_acme-challenge.<zone domain>" works.
-//
 package otcdns
 
 import (
