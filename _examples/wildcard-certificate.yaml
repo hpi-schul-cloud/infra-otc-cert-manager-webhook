@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-certificate-examplesubdomain-hpi-schul-cloud-dev
+  namespace: cert-manager
+spec:
+  # commonName: *.examplesubdomain.hpi-schul-cloud.dev
+  dnsNames:
+  - '*.examplesubdomain.hpi-schul-cloud.dev'
+  issuerRef:
+    kind: ClusterIssuer
+    name: sc-cert-manager-clusterissuer-letsencrypt-staging-otcdns
+  secretName: wildcard-certificate-examplesubdomain-hpi-schul-cloud-dev-tls
