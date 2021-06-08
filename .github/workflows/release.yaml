@@ -43,5 +43,8 @@ jobs:
         uses: helm/chart-releaser-action@v1.2.1
         with:
           version: v1.2.1
+          charts_dir: deploy/infra-otc-cert-manager-webhook
+          # config: 
+          # charts_repo_url: https://<owner>.github.io/<project>
         env:
           CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
