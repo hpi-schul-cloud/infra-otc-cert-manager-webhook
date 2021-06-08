@@ -1,0 +1,47 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'deploy/infra-otc-cert-manager-webhook'
+      
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/actions/checkout 
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      
+      # 
+      # https://github.com/Azure/setup-helm
+      # Acceptable values for version are latest or any semantic version string like v2.16.7 Use this action in workflow to define which version of helm will be used.
+      #
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 3.4.0 #renovate: datasource=github-releases depName=helm/helm
+
+      #- name: Add external Helm repos
+      #  run: helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      # No chart dependencies to build. So left out here.
+
+      # https://github.com/helm/chart-releaser-action
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.2.1
+        with:
+          version: v1.2.1
+        env:
+          CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
