@@ -27,3 +27,4 @@ _test
 # Example see: _examples/example_config.json
 testdata/otcdns/**/*.json
 testdata/otcdns/**/*.yaml
+testdata/*.yaml
