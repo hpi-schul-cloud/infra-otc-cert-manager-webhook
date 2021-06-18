@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-otcdns
+  name: sc-cert-manager-clusterissuer-letsencrypt-otcdns
 spec:
   acme:
     # The ACME server URL
