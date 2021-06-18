@@ -21,7 +21,7 @@ image:
 
 nameOverride: ""
 fullnameOverride: ""
-logLevel: 12
+logLevel: 2
 
 service:
   type: ClusterIP
