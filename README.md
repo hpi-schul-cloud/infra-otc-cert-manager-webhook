@@ -201,14 +201,19 @@ The config.json is used in tests that have credentials as input parameters. E.g.
 
 #### Makefile
 
-    Run "make" to download kubebuilder into _test/kubebuilder/bin and to run the main testsuite.
+Run "make" to download kubebuilder into _test/kubebuilder/bin and to run the main testsuite.
+
+```bash
+make
+```
 
 When the credentials are configured as described above, the tests shall immediatly succeed.
 
-    Optional: Run "make rendered-manifest.yaml" to render the Helmchart into the "_out" directory. This give you an impression about the Kubernetes configuration.
-    Optional: Run "make build" to locally build the Docker container.
-
 The tests you just ran using the makefile are described in the next two chapters.
+
+Optional: Run "make rendered-manifest.yaml" to render the Helmchart into the "_out" directory. This give you an impression about the Kubernetes configuration.
+
+Optional: Run "make build" to locally build the Docker container.
 
 #### OTC DNS Client Tests
 
@@ -218,8 +223,10 @@ As of today a valid OTC setup is needed. This means you need a local ~/.config/o
 
 To run all OTC DNS Client tests from the command line:
 
-    cd otcdns
-    go test -v .
+```bash
+cd otcdns
+go test -v .
+```    
 
 #### Cert-Manager Solver Tests
 
@@ -227,10 +234,18 @@ The solver tests are located in main_test.go.
 
 The solver tests rely on the kubebuilder binaries. They are installed by the first target in the Makefile.
 
-- cd into the main project directory where the Makefile is´
-- Run:
+- cd into the main project directory where the Makefile is and run make:
 
-```make```
+```bash
+make
+```
 
-This will install the kubebuilder testenvironment and run the cert-manager solver testsuite tests within it. A docker image of the Webhook application is not needed for this.
+If the kubebuilder is already installed, you can run
+```bash
+go test -v .
+```
+instead.
 
+This will install the kubebuilder testenvironment and run the cert-manager solver testsuite tests within it. 
+
+Note that a docker image of the Webhook application is not needed for this. The source code is sufficient.
