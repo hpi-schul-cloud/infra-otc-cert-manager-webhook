@@ -215,6 +215,8 @@ Optional: Run "make rendered-manifest.yaml" to render the Helmchart into the "_o
 
 Optional: Run "make build" to locally build the Docker container.
 
+Note that a docker image of the Webhook application is not needed for running tests. The source code is sufficient.
+
 #### OTC DNS Client Tests
 
 The test functionality concerning the OTC API is in [otcdns/client_test.go](otcdns/client_test.go).
@@ -240,12 +242,10 @@ The solver tests rely on the kubebuilder binaries. They are installed by the fir
 make
 ```
 
+This will install the kubebuilder testenvironment and run the cert-manager solver testsuite tests within it.
+
 If the kubebuilder is already installed, you can run
 ```bash
 go test -v .
 ```
 instead.
-
-This will install the kubebuilder testenvironment and run the cert-manager solver testsuite tests within it. 
-
-Note that a docker image of the Webhook application is not needed for this. The source code is sufficient.
