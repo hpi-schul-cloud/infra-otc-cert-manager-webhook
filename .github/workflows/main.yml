@@ -3,6 +3,9 @@ on:
   release:
     types: [published]
   # Allows you to run this workflow manually from the Actions tab
+  push:
+    tags:
+      - 'v*'  
   workflow_dispatch:
         
 jobs:
