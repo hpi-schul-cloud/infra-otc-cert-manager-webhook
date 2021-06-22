@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   infra-otc-cert-manager-webhook:
   - apiVersion: v1
+    appVersion: 1.0.0
+    created: "2021-06-22T07:32:05.967338396Z"
+    description: A Helm chart for the infra-otc-cert-manager-webhook
+    digest: 4fff6a7bc09d423ecfbeb0c5f38e93f36e767aa4d2449f631032eb3970889817
+    maintainers:
+    - name: Markus Bartels
+      url: https://github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook
+    name: infra-otc-cert-manager-webhook
+    urls:
+    - https://github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/releases/download/infra-otc-cert-manager-webhook-0.2.0/infra-otc-cert-manager-webhook-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
     appVersion: "1.0"
     created: "2021-06-08T12:24:34.734124914Z"
     description: A Helm chart for the infra-otc-cert-manager-webhook
@@ -13,4 +25,4 @@ entries:
     urls:
     - https://github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/releases/download/infra-otc-cert-manager-webhook-0.1.0/infra-otc-cert-manager-webhook-0.1.0.tgz
     version: 0.1.0
-generated: "2021-06-08T12:24:34.734140614Z"
+generated: "2021-06-22T07:32:05.967347396Z"
