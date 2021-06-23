@@ -73,7 +73,7 @@ func (s *OtcDnsSolver) Initialize(kubeClientConfig *rest.Config, stopCh <-chan s
 //   the webhook sections of the ClusterIssuer solver configuration.
 //
 func (s *OtcDnsSolver) Present(challengeRequest *v1alpha1.ChallengeRequest) error {
-	klog.V(6).Infof("call function Present: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
+	klog.Infof("call function Present: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
 
 	otcdnsClient, err := s.getOtcDnsClientFromChallengeRequest(challengeRequest)
 	if err != nil {
@@ -94,14 +94,14 @@ func (s *OtcDnsSolver) Present(challengeRequest *v1alpha1.ChallengeRequest) erro
 
 	if challengeExists {
 		// The TXT challenge request entry is already present.
-		klog.V(6).Infof("challenge request entry is already present. Skipping create.")
+		klog.Infof("challenge request entry is already present. Skipping create.")
 	} else if existingRecordset == nil {
 		// The whole recordset of the challenge request does not exist. Create it.
 		createdRecordset, err := otcdnsClient.NewTxtRecordSet(zone, safeChallengeRequestKey)
 		if err != nil {
 			return fmt.Errorf("failed to create new challenge request DNS TXT entry. %s", err)
 		}
-		klog.V(6).Infof("created new challenge request DNS TXT entry %s with values %s", createdRecordset.Name, createdRecordset.Records)
+		klog.Infof("created new challenge request DNS TXT entry %s with values %s", createdRecordset.Name, createdRecordset.Records)
 	} else {
 		// The recordset exists, but the challenge request value is missing.
 		// Add record with challenge key.
@@ -110,10 +110,10 @@ func (s *OtcDnsSolver) Present(challengeRequest *v1alpha1.ChallengeRequest) erro
 		if err != nil {
 			return fmt.Errorf("failed to update challenge DNS TXT entry. %s", err)
 		}
-		klog.V(6).Infof("changed challenge request DNS TXT entry %s with values %s", changedRecordset.Name, changedRecordset.Records)
+		klog.Infof("changed challenge request DNS TXT entry %s with values %s", changedRecordset.Name, changedRecordset.Records)
 	}
 
-	klog.V(6).Infof("call function Present succeeded: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
+	klog.Infof("call function Present succeeded: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
 	return nil
 }
 
@@ -122,7 +122,7 @@ func (s *OtcDnsSolver) Present(challengeRequest *v1alpha1.ChallengeRequest) erro
 // the same `key` value provided on the ChallengeRequest should be cleaned up.
 // This is in order to facilitate multiple DNS validations for the same domain concurrently.
 func (s *OtcDnsSolver) CleanUp(challengeRequest *v1alpha1.ChallengeRequest) error {
-	klog.V(6).Infof("CleanUp: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
+	klog.Infof("CleanUp: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
 
 	otcdnsClient, err := s.getOtcDnsClientFromChallengeRequest(challengeRequest)
 	if err != nil {
@@ -148,19 +148,19 @@ func (s *OtcDnsSolver) CleanUp(challengeRequest *v1alpha1.ChallengeRequest) erro
 			return fmt.Errorf("failed to delete DNS TXT entry %s. %s", safeChallengeRequestKey, err)
 		}
 		if changedRecordSet != nil {
-			klog.V(6).Infof("CleanUp removed one challenge key %s from the recordset %s", safeChallengeRequestKey, changedRecordSet.Name)
+			klog.Infof("CleanUp removed one challenge key %s from the recordset %s", safeChallengeRequestKey, changedRecordSet.Name)
 		} else {
-			klog.V(6).Infof("CleanUp detected that this was the last TXT value in the recordset. Recordset %s deleted", existingRecordset.Name)
+			klog.Infof("CleanUp detected that this was the last TXT value in the recordset. Recordset %s deleted", existingRecordset.Name)
 		}
 	} else if existingRecordset == nil {
 		// The TXT challenge recordset does not exist. Nothing to do.
-		klog.V(6).Infof("CleanUp not needed. The challenge request DNS TXT recordset does not exit. Skipping delete for challenge value %s", safeChallengeRequestKey)
+		klog.Infof("CleanUp not needed. The challenge request DNS TXT recordset does not exit. Skipping delete for challenge value %s", safeChallengeRequestKey)
 	} else {
 		// The TXT challenge value does not exist. Nothing to do.
-		klog.V(6).Infof("CleanUp no needed. The challenge request DNS TXT challenge value %s does not exit in recordset %s. Skipping delete", safeChallengeRequestKey, existingRecordset.Name)
+		klog.Infof("CleanUp no needed. The challenge request DNS TXT challenge value %s does not exit in recordset %s. Skipping delete", safeChallengeRequestKey, existingRecordset.Name)
 	}
 
-	klog.V(6).Infof("CleanUp succeeded: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
+	klog.Infof("CleanUp succeeded: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
 	return nil
 }
 
@@ -176,7 +176,7 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 		return nil, fmt.Errorf("cannot create otcDnsClient. Json not converted. %s", err)
 	}
 	// fmt.Printf("Decoded configuration %v", solverWebhookConfig)
-	// klog.V(6).Infof("decoded configuration %v", solverWebhookConfig)
+	// klog.Infof("decoded configuration %v", solverWebhookConfig)
 
 	// Get the secrets from Kubernetes
 	secrets, err := s.getOtcDnsSecrets(&solverWebhookConfig, challengeRequest.ResourceNamespace)
