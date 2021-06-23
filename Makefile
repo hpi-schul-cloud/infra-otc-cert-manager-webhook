@@ -22,6 +22,7 @@ $(shell mkdir -p "$(OUT)")
 # go test -v .
 #
 test: _test/kubebuilder
+	go test -v ./otcdns
 	go test -v .
 
 #
