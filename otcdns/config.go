@@ -6,10 +6,9 @@ import (
 
 	otc "github.com/opentelekomcloud/gophertelekomcloud"
 	otcos "github.com/opentelekomcloud/gophertelekomcloud/openstack"
-	extapi "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	extapi "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 
-	// cmmeta1 "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
-	cmmeta1 "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
+	cmmeta1 "github.com/cert-manager/cert-manager/pkg/apis/meta/v1"
 )
 
 // ===========================================================================
@@ -51,14 +50,12 @@ type OtcDnsConfig struct {
 	AuthURL string `json:"authURL"`
 }
 
-//
 // The "config" part of the solver configuration is given to us with the ChallengeRequest
 // in a plain json format.
 // We unmarshal that json here and integrate it into our OtcDnsConfig object.
 //
 // Note that the returned configuration should not contain secrets only references to
 // the secrets we need to access the otcdns.
-//
 func configJsonToOtcDnsConfig(cfgJSON *extapi.JSON) (OtcDnsConfig, error) {
 	cfg := OtcDnsConfig{}
 	// handle the 'base case' where no configuration has been provided
@@ -83,11 +80,9 @@ const (
 	OtcProfileNameAkSk string = "otcaksk"
 )
 
-//
 // Creates a ProviderClient and authenticates it, with a configuration we load from Kubernetes.
 //
 // https://github.com/opentelekomcloud/gophertelekomcloud/blob/v0.3.2/auth_options.go
-//
 func getProviderClientWithAccessKeyAuth(authOpts otc.AuthOptionsProvider) (*otc.ProviderClient, error) {
 	provider, err := otcos.AuthenticatedClient(authOpts)
 	if err != nil {
@@ -98,20 +93,16 @@ func getProviderClientWithAccessKeyAuth(authOpts otc.AuthOptionsProvider) (*otc.
 
 var EnvOS = otcos.NewEnv(envPrefix)
 
-//
 // Creates a ProviderClient and authenticates it, with the local cloud configuration.
 // A local ~/.config/openstack/clouds.yaml with an <otcProfileName> profile must be loadable.
 // See also: gophertelekomcloud/acceptance/clients/clients.go
-//
 func getProviderClient() (*otc.ProviderClient, error) {
 	return getProviderClientProfile(OtcProfileNameUser)
 }
 
-//
 // Creates a ProviderClient and authenticates it, with the local cloud configuration.
 // A local ~/.config/openstack/clouds.yaml with an <otcProfileName> profile must be loadable.
 // See also: gophertelekomcloud/acceptance/clients/clients.go
-//
 func getProviderClientProfile(otcProfileName string) (*otc.ProviderClient, error) {
 
 	client, err := EnvOS.AuthenticatedClient(otcProfileName)
@@ -122,18 +113,14 @@ func getProviderClientProfile(otcProfileName string) (*otc.ProviderClient, error
 	return client, nil
 }
 
-//
 // Loads the configuration(s) into a 'Cloud' object.
 // The configuration is loaded from the environment and/or the clouds.yaml.
-//
 func getCloud() (*otcos.Cloud, error) {
 	return getCloudProfile(OtcProfileNameUser)
 }
 
-//
 // Loads the configuration(s) into a 'Cloud' object.
 // The configuration is loaded from the environment and/or the clouds.yaml.
-//
 func getCloudProfile(otcProfileName string) (*otcos.Cloud, error) {
 
 	cloud, err := EnvOS.Cloud(otcProfileName)
@@ -149,11 +136,9 @@ func getCloudProfile(otcProfileName string) (*otcos.Cloud, error) {
 	return cloud, nil
 }
 
-//
 // Creates a deep copy of the given cloud data.
 // Returns the copy.
 // See also gophertelekomcloud/acceptance/clients/clients.go
-//
 func copyCloud(src *otcos.Cloud) (*otcos.Cloud, error) {
 	srcJson, err := json.Marshal(src)
 	if err != nil {

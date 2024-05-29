@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook/cmd"
 	"github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/otcdns"
-	"github.com/jetstack/cert-manager/pkg/acme/webhook/cmd"
 	"k8s.io/klog"
 )
 
