@@ -8,7 +8,7 @@ infra-otc-cert-manager-webhook](https://github.com/hpi-schul-cloud/infra-otc-cer
 ## Requirements
 
 - [kubernetes](https://kubernetes.io/) >= v1.18.0
-- [cert-manager](https://cert-manager.io/) >= 1.3.1
+- [cert-manager](https://cert-manager.io/) >= 1.14.5
 - [helm](https://helm.sh/) >= v3.0.0
 
 ## Configuration
@@ -173,7 +173,7 @@ The cert-manager will detect it and start the issuing process. See [Troubleshoot
 
 ### Requirements
 
-- [go](https://golang.org/) >= 1.13.0
+- [go](https://golang.org/) >= 1.22.3
 
 ### Configure the tests
 
