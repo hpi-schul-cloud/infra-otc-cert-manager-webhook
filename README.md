@@ -26,6 +26,7 @@ The following table lists the configurable parameters of the infra-otc-cert-mana
 | `image.repository` | Image repository | `schulcloud/infra-otc-cert-manager-webhook` |
 | `image.tag` | Image tag | `sha-6e4a13b` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
+| `image.pullSecrets` | Image pull secrets | `[]` |
 | `nameOverride` | Override for the chartname | `` |
 | `fullnameOverride` | Override for the fullname of the chart | `` |
 | `loglevel` | Number for the log level verbosity of webhook. | 2 |
@@ -35,6 +36,11 @@ The following table lists the configurable parameters of the infra-otc-cert-mana
 | `nodeSelector` | Node labels for pod assignment | `{}` |
 | `affinity` | Node affinity for pod assignment | `{}` |
 | `tolerations` | Node tolerations for pod assignment | `[]` |
+| `properties.disableSecurityContext` | Disable security context for container | `false` |
+| `properties.runAsUser` | UID of user with which to run the container | `10000` |
+| `properties.runAsGroup` | GID of group with which to run the container | `10001` |
+| `properties.fsGroup` | GID of group which will own the mounted volumes | `10001` |
+| `properties.readOnlyRootFilesystem` | Sets filesystem to read-only | `false` |
 
 ## Installation
 
