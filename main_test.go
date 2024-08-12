@@ -4,15 +4,13 @@ import (
 	"os"
 	"testing"
 
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook"
+	dns "github.com/cert-manager/cert-manager/test/acme"
 	"github.com/hpi-schul-cloud/infra-otc-cert-manager-webhook/otcdns"
-	"github.com/jetstack/cert-manager/pkg/acme/webhook"
-	"github.com/jetstack/cert-manager/test/acme/dns"
 	"k8s.io/klog"
 )
 
-//
 // Allows to overwrite the default value with a custom value.
-//
 func getTestZone() string {
 	var testZone string = "hpi-schul-cloud.dev."
 	if os.Getenv("TEST_ZONE_NAME") == "" {
@@ -40,7 +38,7 @@ func TestRunsSuite(t *testing.T) {
 		//dns.SetResolvedFQDN(fqdn),
 		dns.SetAllowAmbientCredentials(false),
 		dns.SetManifestPath("testdata/otcdns/manifests"),
-		dns.SetBinariesPath("_test/kubebuilder/bin"),
+		//dns.SetBinariesPath("_test/kubebuilder/bin"),
 		dns.SetDNSServer("80.158.48.19:53"),
 		//dns.SetDNSName(testZone),
 		// Enable extended tests with multiple TXT entries in one recordset.

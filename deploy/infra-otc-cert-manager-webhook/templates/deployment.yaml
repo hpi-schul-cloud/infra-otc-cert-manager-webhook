@@ -22,6 +22,19 @@ spec:
         release: {{ .Release.Name }}
     spec:
       serviceAccountName: {{ include "infra-otc-cert-manager-webhook.fullname" . }}
+      {{- if not .Values.properties.disableSecurityContext }}
+      securityContext:
+        runAsUser: {{ default 10000 .Values.properties.runAsUser }}
+        runAsGroup: {{ default 10001 .Values.properties.runAsGroup }}
+        fsGroup: {{ default 10001 .Values.properties.fsGroup }}
+        fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: RuntimeDefault
+      {{- end }}
+      {{- if hasKey .Values.image "imagePullSecrets" }}
+      imagePullSecrets:
+{{ toYaml .Values.image.imagePullSecrets | indent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -30,6 +43,7 @@ spec:
             {{- if .Values.logLevel }}
             - --v={{ .Values.logLevel }}
             {{- end }}
+            - --secure-port=8443
             - --tls-cert-file=/tls/tls.crt
             - --tls-private-key-file=/tls/tls.key
           env:
@@ -37,7 +51,7 @@ spec:
               value: {{ .Values.groupName | quote }}
           ports:
             - name: https
-              containerPort: 443
+              containerPort: 8443
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -53,6 +67,24 @@ spec:
             - name: certs
               mountPath: /tls
               readOnly: true
+          {{- if not .Values.properties.disableSecurityContext }}
+          securityContext:
+            runAsNonRoot: true
+            privileged: false
+            runAsUser: {{ default 10000 .Values.properties.runAsUser }}
+            runAsGroup: {{ default 10001 .Values.properties.runAsGroup }}
+            {{- if hasKey .Values.properties "readOnlyRootFilesystem" }}
+            readOnlyRootFilesystem: {{ .Values.properties.readOnlyRootFilesystem }}
+            {{- else }}
+            readOnlyRootFilesystem: true
+            {{- end }}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:

@@ -8,7 +8,7 @@ infra-otc-cert-manager-webhook](https://github.com/hpi-schul-cloud/infra-otc-cer
 ## Requirements
 
 - [kubernetes](https://kubernetes.io/) >= v1.18.0
-- [cert-manager](https://cert-manager.io/) >= 1.3.1
+- [cert-manager](https://cert-manager.io/) >= 1.14.5
 - [helm](https://helm.sh/) >= v3.0.0
 
 ## Configuration
@@ -26,6 +26,7 @@ The following table lists the configurable parameters of the infra-otc-cert-mana
 | `image.repository` | Image repository | `schulcloud/infra-otc-cert-manager-webhook` |
 | `image.tag` | Image tag | `sha-6e4a13b` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
+| `image.pullSecrets` | Image pull secrets | `[]` |
 | `nameOverride` | Override for the chartname | `` |
 | `fullnameOverride` | Override for the fullname of the chart | `` |
 | `loglevel` | Number for the log level verbosity of webhook. | 2 |
@@ -35,6 +36,11 @@ The following table lists the configurable parameters of the infra-otc-cert-mana
 | `nodeSelector` | Node labels for pod assignment | `{}` |
 | `affinity` | Node affinity for pod assignment | `{}` |
 | `tolerations` | Node tolerations for pod assignment | `[]` |
+| `properties.disableSecurityContext` | Disable security context for container | `false` |
+| `properties.runAsUser` | UID of user with which to run the container | `10000` |
+| `properties.runAsGroup` | GID of group with which to run the container | `10001` |
+| `properties.fsGroup` | GID of group which will own the mounted volumes | `10001` |
+| `properties.readOnlyRootFilesystem` | Sets filesystem to read-only | `false` |
 
 ## Installation
 
@@ -173,7 +179,7 @@ The cert-manager will detect it and start the issuing process. See [Troubleshoot
 
 ### Requirements
 
-- [go](https://golang.org/) >= 1.13.0
+- [go](https://golang.org/) >= 1.22.3
 
 ### Configure the tests
 

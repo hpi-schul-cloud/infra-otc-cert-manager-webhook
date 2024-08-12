@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jetstack/cert-manager/pkg/acme/webhook"
-	"github.com/jetstack/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook"
+	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
 	otc "github.com/opentelekomcloud/gophertelekomcloud"
 
 	// apiv1 "k8s.io/api/core/v1"
@@ -64,14 +64,13 @@ func (s *OtcDnsSolver) Initialize(kubeClientConfig *rest.Config, stopCh <-chan s
 	return nil
 }
 
-//
 // Present is responsible for actually presenting the DNS record with the DNS provider.
 // This method should tolerate being called multiple times with the same value.
 // cert-manager itself will later perform a self check to ensure that the solver has correctly configured the DNS provider.
 //
 // challengeRequest: The challenge request to resolve. The challenge request contains the configuration, that is defined in
-//   the webhook sections of the ClusterIssuer solver configuration.
 //
+//	the webhook sections of the ClusterIssuer solver configuration.
 func (s *OtcDnsSolver) Present(challengeRequest *v1alpha1.ChallengeRequest) error {
 	klog.Infof("call function Present: namespace=%s, zone=%s, fqdn=%s", challengeRequest.ResourceNamespace, challengeRequest.ResolvedZone, challengeRequest.ResolvedFQDN)
 
@@ -164,9 +163,7 @@ func (s *OtcDnsSolver) CleanUp(challengeRequest *v1alpha1.ChallengeRequest) erro
 	return nil
 }
 
-//
 // Create a otcDnsClient using the given information in the challenge.
-//
 func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1alpha1.ChallengeRequest) (*OtcDnsClient, error) {
 	// Get the configuration from the challenge request.
 	// For the test this is injected via the config.json located in the ManifestPath (see SetManifestPath).
@@ -213,17 +210,13 @@ func (s *OtcDnsSolver) getOtcDnsClientFromChallengeRequest(challengeRequest *v1a
 	return otcDnsClient, err
 }
 
-//
 // Turns the given challenge key into a safe value we can store in DNS.
-//
 func (s *OtcDnsSolver) getSafeTxtValue(key string) string {
 	safeKey := "\"" + key + "\""
 	return safeKey
 }
 
-//
 // Extract domain and subdomain in a form we can process from the challenge request.
-//
 func (s *OtcDnsSolver) extractDomainAndSubdomainFromChallengeRequest(challengeRequest *v1alpha1.ChallengeRequest) (string, string) {
 	// Extract subdomain by trimming challengeRequest.ResolvedZone (e.g. example.com.) from challengeRequest.ResolvedFQDN (e.g. _acme-challenge.example.com.)
 	subDomain := strings.TrimSuffix(challengeRequest.ResolvedFQDN, challengeRequest.ResolvedZone)
@@ -234,9 +227,7 @@ func (s *OtcDnsSolver) extractDomainAndSubdomainFromChallengeRequest(challengeRe
 	return subDomain, domain
 }
 
-//
 // The given webhook configuration contains the definitions of references to the secrets we want to load.
-//
 func (s *OtcDnsSolver) getOtcDnsSecrets(config *OtcDnsConfig, namespace string) (*otcdnsSecrets, error) {
 
 	secs := otcdnsSecrets{}
@@ -266,9 +257,7 @@ func (s *OtcDnsSolver) getOtcDnsSecrets(config *OtcDnsConfig, namespace string) 
 	return &secs, nil
 }
 
-//
 // Takes the given references and tries to load the secrets from the reference locations.
-//
 func (s *OtcDnsSolver) getReferencedSecret(namespace string, keyRefName string, keyRefKey string) (string, error) {
 	secret, err := s.client.CoreV1().Secrets(namespace).Get(context.Background(), keyRefName, metav1.GetOptions{})
 	if err != nil {

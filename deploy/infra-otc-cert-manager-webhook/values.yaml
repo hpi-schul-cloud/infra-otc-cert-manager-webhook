@@ -18,6 +18,8 @@ image:
   repository: schulcloud/infra-otc-cert-manager-webhook
   tag: 1.0.1
   pullPolicy: IfNotPresent
+  # pullSecrets:
+  # - name: my-pullsecret
 
 nameOverride: ""
 fullnameOverride: ""
@@ -45,3 +47,4 @@ tolerations: []
 
 affinity: {}
 
+properties: {}
